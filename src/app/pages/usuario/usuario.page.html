@@ -1,0 +1,256 @@
+<ion-header>
+  <ion-toolbar color="dark" class="ion-text-center">
+    <ion-title>usuario</ion-title>
+
+    <ion-buttons slot="start" defaultHref="/">
+      <!--ion-back-button></ion-back-button-->
+      <ion-menu-button autoHide="false" menuId="menu"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-slides mode="md" color="dark" [options]="slideOpts" *ngIf="usuario.CodClie.length>0">
+      <ion-slide *ngFor="let enlace of enlaces" color="dark">
+        <ion-label (click)="slideTap(enlace.id)" class="subtitulo">{{ enlace.titulo }}</ion-label>
+      </ion-slide>
+    </ion-slides>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-text-center">
+
+  <ion-grid fixed *ngIf="opcion === 0">
+    <ion-row>
+      <ion-col>
+        <label>Nombres</label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <input type="text" [(ngModel)]="usuario.Nombres">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <label>Apellidos</label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <input type="text" [(ngModel)]="usuario.Apellidos">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <label>No Documento</label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <input type="text" [(ngModel)]="usuario.CodClie">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <label>Número de celular</label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <input type="text" [(ngModel)]="usuario.Telefono">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        Correo electrónico
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <input type="text" [(ngModel)]="usuario.Email">
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="usuario.CodClie.length == 0">
+      <ion-col>
+        Contraseña
+      </ion-col>
+    </ion-row>    
+    <ion-row *ngIf="usuario.CodClie.length == 0">
+      <ion-col>
+        <input type="password" [(ngModel)]="usuario.Clave">
+      </ion-col>
+    </ion-row>    
+    <ion-row>
+      <ion-col>
+          <ion-button (click)="guardar()" expand="block" fill="solid" shape="round" color="dark">
+              Guardar
+          </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-grid fixed *ngIf="opcion === 1">
+    <ion-row>
+      <ion-col *ngFor="let pedido of listaPedidos">
+        <ion-card color="light">
+          <ion-card-content color="light">
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item color="light">
+                    Pedido # {{pedido.id}}
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item color="light">
+                    <ion-label class="condensada">{{pedido.Fecha}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item color="light">
+                    <ion-label>{{pedido.EstadoPedido}}</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item color="light">
+                    <ion-label>{{((pedido.Valor * 1) + (pedido.Impuesto * 1)) | redondeo | currency}}</ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item color="light">
+                    <ion-label (click)="mostrarDetalle(pedido.id)" color="primary">Detalle</ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid fixed *ngIf="opcion === 2">
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>País</ion-label>
+          <ion-select [(ngModel)]="pais" (ionChange)="cambiarPais(pais)">
+            <ion-select-option [value]="pais" *ngFor="let pais of listaPaises">{{pais.Descrip}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>Estado</ion-label>
+          <ion-select [(ngModel)]="estado" (ionChange)="cambiarEstado(estado)">
+            <ion-select-option [value]="estado"  *ngFor="let estado of listaEstados">{{estado.Descrip}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>Ciudad</ion-label>
+          <ion-select [(ngModel)]="ciudad" (ionChange)="cambiarCiudad(ciudad)">
+            <ion-select-option [value]="ciudad"  *ngFor="let ciudad of listaCiudades">{{ciudad.Descrip}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col>
+        <label>Dirección</label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <input type="text" [(ngModel)]="usuario.Direccion">
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+          <ion-button (click)="actualizar()" expand="block" fill="solid" shape="round" color="dark">
+              Actualizar
+          </ion-button>
+      </ion-col>
+    </ion-row>    
+  </ion-grid>
+
+  <ion-grid fixed *ngIf="opcion === 3">
+    <ion-row>
+      <ion-col>
+        Contraseña
+      </ion-col>
+    </ion-row>    
+    <ion-row>
+      <ion-col>
+        <input type="password" [(ngModel)]="usuario.Clave">
+      </ion-col>
+    </ion-row>    
+    <ion-row>
+      <ion-col>
+          <ion-button (click)="cambiarClave()" expand="block" fill="solid" shape="round" color="dark">
+              Actualizar
+          </ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+  <ion-grid fixed *ngIf="opcion == 4">
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label>Pedido No. {{ numeroPedido }}</ion-label>
+        </ion-item>
+
+      </ion-col>
+      <ion-col size="12" *ngFor="let detalle of detallePedido">
+        <ion-card>         
+          <ion-card-content>
+            <ion-grid fixed>
+              <ion-row>
+                <ion-col size="6"><img src="{{ detalle.Imagen | imgProducto }}" ></ion-col>
+                <ion-col size="6">
+                  <ion-grid fixed>
+                    <ion-row>
+                      <ion-col class="media">{{ detalle.CodProd }}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col class="condensada">{{ detalle.Descripcion }}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col class="media">Cantidad: {{ detalle.Cantidad }}</ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col class="media">{{ (detalle.Valor * 1) + (detalle.Impuesto * 1) | redondeo | currency }}</ion-col>
+                    </ion-row>
+                  </ion-grid>                
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-row *ngIf="this.cartService.carroCompras.length > 0 && opcion != 1">
+    <ion-col>
+        <ion-button (click)="finalizar()" expand="block" fill="solid" shape="round" color="dark">
+            Finalizar Pedido
+        </ion-button>
+    </ion-col>
+  </ion-row>  
+</ion-content>

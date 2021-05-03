@@ -24,3 +24,44 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #4d4d4d;
+}
+.descripcion {
+    font-size: 0.9em;
+}
+
+
+.referencia {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.subtitulo {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.condensada {
+    font-size: 9px;
+}
+
+.media {
+    font-size: 11px;
+}
+
+.cuadro {
+    display: table;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 14%;
+    background-color: #e6e6e6;
+}
+
+.linea {
+    display: table-cell;
+}

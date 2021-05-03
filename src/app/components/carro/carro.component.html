@@ -1,0 +1,14 @@
+<ion-grid>    
+    <ion-row class="ion-text-center">
+        <ion-col size="4">
+            <div class="cuadro">
+                <ion-button (click)="restar()" fill="clear" color="dark" size="small" class="linea">- |</ion-button>
+                <ion-input type="number" #cantidad value="{{total}}" (ionChange)="cambiar(cantidad.value)" class="linea"></ion-input>
+                <ion-button (click)="sumar()" fill="clear" color="dark" size="small" class="linea">| +</ion-button>
+            </div>
+        </ion-col>
+        <ion-col size="8">
+            <ion-button (click)="agregar()" color="dark" shape="round" class="condensada">Agregar al carrito</ion-button>
+        </ion-col>
+    </ion-row>
+</ion-grid>

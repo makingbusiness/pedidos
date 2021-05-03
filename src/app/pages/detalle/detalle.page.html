@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start" defaultHref="/">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>   
+    <ion-title>{{codigo}}</ion-title>
+    <ion-button color="dark" (click)="mostrarCarro()" slot="end" *ngIf="this.cartService.carroCompras.length > 0">
+      <ion-icon name="cart-outline"></ion-icon>
+  </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card padding>
+    <ion-card-header *ngIf="listaImagenes.length > 0">
+      <ion-slides mode="md" pager="md" scrollbar="md" [options]="slideDetOpts">
+        <ion-slide *ngFor="let img of listaImagenes">
+          <img src="{{ img }}">
+        </ion-slide>
+      </ion-slides>
+    </ion-card-header>
+    <ion-card-title>
+      {{ codigo }}
+    </ion-card-title>
+    <ion-card-subtitle>
+      {{descripcion}}
+    </ion-card-subtitle>
+    <ion-card-title>
+      {{ precio | currency }}
+    </ion-card-title>
+
+    <ion-slides *ngIf="listaProductos.length > 1" [options]="slideOpts">
+        <ion-slide *ngFor="let img of listaProductos">
+          <ion-img src="{{ img | imgProducto }}" (click)="cambiarImagen(img)"></ion-img>
+        </ion-slide>
+    </ion-slides>
+      
+    <app-carro [producto]=producto></app-carro>
+    <ion-card-content>
+       {{ampliada}}
+    </ion-card-content>
+  </ion-card>
+</ion-content>

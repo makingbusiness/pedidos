@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start" defaultHref="/">
+      <!--ion-back-button></ion-back-button-->
+      <ion-menu-button autoHide="false" menuId="menu"></ion-menu-button>
+    </ion-buttons> 
+    <ion-title>Lista de productos</ion-title>
+    <ion-button color="dark" (click)="mostrarCarro()" slot="end" *ngIf="this.cartService.carroCompras.length > 0">
+        <ion-icon name="cart-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+
+  <ion-slides [options]="slideOpts">
+    <ion-slide *ngFor="let instancia of instancias">
+        <ion-label (click)="slideTap(instancia)" class="condensada">{{ instancia.Descrip }}</ion-label>
+    </ion-slide>
+</ion-slides>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let prod of productos" size="12">
+
+         <ion-row>
+              <ion-col size=4>
+                  <ion-img src="{{ prod | imagen }}" (click)="detalleProducto(prod.CodProd)"></ion-img>
+              </ion-col>
+              <ion-col size=5>
+                <div class="card-body">
+                  <h5 class="card-title referencia">{{ prod.CodProd }}</h5>
+                  <p class="card-text condensada">{{ prod.Descrip }}</p>
+                  <ion-button (click)="agregar(prod)" color="dark" shape="round" class="condensada">Agregar al carrito</ion-button>
+                </div>
+              </ion-col>
+              <ion-col size=3>
+                <p class="card-text"><small class="text-muted">{{ prod.Precio * (1 + prod.Impuesto / 100) | redondeo | currency }}</small></p>
+              </ion-col>
+         </ion-row>
+      </ion-col>
+
+      <ion-infinite-scroll threshold="150px" (ionInfinite)="cargarProductos($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles"
+          loadingText="Cargando ...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

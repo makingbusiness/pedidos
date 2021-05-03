@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start" defaultHref="/">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>   
+    <ion-title>{{codigo}}</ion-title>
+    <ion-button color="dark" (click)="mostrarCarro()" slot="end" *ngIf="this.cartService.carroCompras.length > 0">
+      <ion-icon name="cart-outline"></ion-icon>
+  </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+           <ion-item *ngIf="pulso">
+            <ion-card>
+              <ion-card-header class="ion-text-center">
+                <ion-card-subtitle>{{pulso.CodProd}}</ion-card-subtitle>
+                <ion-card-title class="descripcion">{{pulso.Descrip}}</ion-card-title>
+                <ion-card-subtitle>{{pulso.Precio*(1+pulso.Impuesto/100) | currency}}</ion-card-subtitle>
+              </ion-card-header>
+    
+              <ion-card-content>
+                  <ion-slides mode="md" pager="md" scrollbar="md" [options]="detalleOpts">
+                    <ion-slide *ngFor="let img of listaImagenes">
+                      <ion-img src="{{ img }}"></ion-img>
+                    </ion-slide>
+                  </ion-slides>
+
+                  <ion-slides mode="md" pager="md" scrollbar="md" [options]="slideOpts">
+                    <ion-slide *ngFor="let txt of listaTexturas;index as pos">
+                      <ion-img src="{{ txt }}" (click)="cambiarImagen(pos)"></ion-img>
+                    </ion-slide>
+                  </ion-slides>
+              </ion-card-content>
+              
+              <ion-grid fixed *ngIf="listaCalibres.length>0">
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label class="condensada">Calibre</ion-label>
+                      <ion-select interface="popover" [(ngModel)]="calibre" (ionChange)="cambiarCalibre(calibre)">
+                        <ion-select-option class="condensada" [value]="calibre" *ngFor="let calibre of listaCalibres">{{ calibre }}</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>              
+            </ion-card>
+          </ion-item>
+          
+          <app-carro [producto]=carro></app-carro>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

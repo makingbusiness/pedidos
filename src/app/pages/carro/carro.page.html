@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="cart" color="dark">
+    <ion-buttons slot="start" defaultHref="/">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons (click)="irInicio()" slot="end">
+      <ion-icon name="home-outline"></ion-icon>
+    </ion-buttons>    
+    <ion-title class="ion-text-center">Carrito</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row *ngFor="let item of items">
+          <ion-col size=4>
+            <ion-img src="{{ item| imagen }}"></ion-img>
+          </ion-col>
+          <ion-col size=8>
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-text-right">
+                  <button class="boton" (click)="eliminar(item.CodProd)">X</button>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="referencia">{{item.CodProd}}</ion-col>                
+              </ion-row>
+              <ion-row>
+                <ion-col class="condensada">{{item.Descrip}}</ion-col>
+              </ion-row>
+              <ion-row>               
+                <ion-col>
+                  <ion-grid>
+                  <ion-row>
+                    <ion-col sieze=8>
+                      <div class="cuadro">
+                        <ion-button (click)="restar(item)" fill="clear" color="dark" class="linea">-</ion-button>
+                        <ion-input type="number" #cantidad [value]="item.Cantidad" maxlength="2" (ionChange)="cambiar(cantidad.value)" class="linea"></ion-input>
+                        <ion-button (click)="sumar(item)" fill="clear" color="dark" class="linea">+</ion-button>
+                      </div>
+                    </ion-col>
+                    <ion-col size=4>
+                      <label class="linea">{{((item.Precio * 1) + (item.Impuesto * 1)) | redondeo | currency}}</label>
+                    </ion-col>                  
+                  </ion-row>
+                  </ion-grid>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-item>
+        <!--ion-button (click)="vaciarCarro()" color="dark"><ion-icon name="trash-outline"></ion-icon>Vaciar carrito</ion-button-->
+        <ion-label></ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+    <ion-button (click)="continuar()" color="dark" shape="round" expand="block" class="envio">Finalizar</ion-button>
+</ion-content>

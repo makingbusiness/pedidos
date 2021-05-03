@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="dark" class="ion-text-center">
+    <ion-title>Finalizar pedido</ion-title>
+
+    <ion-buttons slot="start" defaultHref="/">
+      <!--ion-back-button></ion-back-button-->
+      <ion-menu-button autoHide="false" menuId="menu"></ion-menu-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-spinner name="crescent" *ngIf="guardando"></ion-spinner>
+  <ion-grid fixed *ngIf="!guardando" color="light">
+    <ion-row class="ion-align-items-center">
+      <ion-col size="12">
+        El pedido ha sido enviado
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

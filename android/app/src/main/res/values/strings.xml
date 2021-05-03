@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AppPedidos</string>
+    <string name="title_activity_main">AppPedidos</string>
+    <string name="package_name">io.mb.pedidos</string>
+    <string name="custom_url_scheme">io.mb.pedidos</string>
+</resources>

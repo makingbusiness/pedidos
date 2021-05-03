@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start" defaultHref="/">
+      <ion-menu-button autoHide="false" menuId="menu"></ion-menu-button>
+    </ion-buttons> 
+    <ion-title>Lista de pulsos</ion-title>
+    <ion-button color="dark" (click)="mostrarCarro()" slot="end" *ngIf="this.cartService.carroCompras.length > 0">
+        <ion-icon name="cart-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+
+  <ion-slides [options]="slideOpts">
+    <ion-slide *ngFor="let instancia of instancias">
+        <ion-label (click)="slideTap(instancia)">{{ instancia.Descrip }}</ion-label>
+    </ion-slide>
+  </ion-slides>
+  
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let pulso of pulsos" size="12">
+         <ion-list>
+           <ion-item>
+            <ion-card>
+              <ion-card-header class="ion-text-center">
+                <ion-card-subtitle>{{ pulso.CodProd }}</ion-card-subtitle>
+                <ion-card-title class="descripcion">{{ pulso.Descrip }}</ion-card-title>
+              </ion-card-header>
+    
+              <ion-card-content>
+                <ion-img src="{{ rutaImg}}{{ pulso | imagenPulso }}" (click)="detallePulso(pulso.CodProd)"></ion-img>
+              </ion-card-content>
+
+              <ion-item *ngIf="pulso.ListaCalibres.length > 0">
+                  <ion-label>Calibres: {{ pulso.ListaCalibres }}</ion-label>
+              </ion-item>
+
+            </ion-card>
+           </ion-item>
+         </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
